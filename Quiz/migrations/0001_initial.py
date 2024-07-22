@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='QUIZ',
+            name='Quiz',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
             ],
@@ -31,12 +31,12 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.CharField(max_length=255)),
                 ('is_correct', models.BooleanField(default=False)),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='QUIZ.question')),
+                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Quiz.question')),
             ],
         ),
         migrations.AddField(
             model_name='question',
             name='quiz',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='QUIZ.quiz'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Quiz.quiz'),
         ),
     ]

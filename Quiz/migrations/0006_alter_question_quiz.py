@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('QUIZ', '0005_remove_question_is_open_ended'),
+        ('Quiz', '0005_remove_question_is_open_ended'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='question',
             name='quiz',
-            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, related_name='questions', to='QUIZ.quiz'),
+            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, related_name='questions', to='Quiz.quiz'),
         ),
     ]

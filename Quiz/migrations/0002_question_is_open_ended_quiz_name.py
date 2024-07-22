@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('QUIZ', '0001_initial'),
+        ('Quiz', '0001_initial'),
     ]
 
     operations = [
@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='quiz',
             name='name',
-            field=models.CharField(default='QUIZ', max_length=255),
+            field=models.CharField(default='Quiz', max_length=255),
         ),
     ]

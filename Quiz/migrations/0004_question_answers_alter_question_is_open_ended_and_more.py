@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('QUIZ', '0003_alter_choice_question_alter_question_quiz_and_more'),
+        ('Quiz', '0003_alter_choice_question_alter_question_quiz_and_more'),
     ]
 
     operations = [
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='question',
             name='quiz',
-            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, to='QUIZ.quiz'),
+            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, to='Quiz.quiz'),
         ),
         migrations.AlterField(
             model_name='question',

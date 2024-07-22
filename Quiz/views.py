@@ -4,8 +4,8 @@ from rest_framework.exceptions import NotFound
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 
-from QUIZ.serializers import QuizSerializer
-from QUIZ.models import Quiz
+from Quiz.serializers import QuizSerializer
+from Quiz.models import Quiz
 
 @api_view(['GET', 'POST', 'DELETE'])
 def quizzes(request):

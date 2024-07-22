@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from .models import Quiz, Question
+import sys
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['text','is_open_ended', 'answers']
+        fields = ['text', 'is_open_ended', 'answers']
 
         def validate(self, attrs):
             answer_count = len(attrs['answers'])
@@ -13,7 +14,8 @@ class QuestionSerializer(serializers.ModelSerializer):
             if answer_count == 1 and not attrs['is_open_ended']:
                 raise serializers.ValidationError("A closed question must have at least 2 answers")
 
-            if attrs['is_open_ended'] is None:
+            print(attrs['is_open_ended'], file=sys.stderr)
+            if attrs['is_open_ended'] is False:
                 raise serializers.ValidationError("A question must have a type [open ended or closed]")
 
             return attrs

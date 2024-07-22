@@ -7,19 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('QUIZ', '0002_question_is_open_ended_quiz_name'),
+        ('Quiz', '0002_question_is_open_ended_quiz_name'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='choice',
             name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='choices', to='QUIZ.question'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='choices', to='Quiz.question'),
         ),
         migrations.AlterField(
             model_name='question',
             name='quiz',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='QUIZ.quiz'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='Quiz.quiz'),
         ),
         migrations.AlterField(
             model_name='quiz',
