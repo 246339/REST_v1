@@ -62,6 +62,7 @@ class QuestionWithRandomizedAnswersSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if not data['is_open_ended']:
+            import random
             random.shuffle(data['answers'])
         else :
             data.pop('answers', None)
@@ -75,3 +76,22 @@ class QuizWithRandomizedAnswersSerializer(serializers.ModelSerializer):
         model = Quiz
         fields = ['name', 'questions']
 
+
+class CorrectAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['answers']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if not instance.is_open_ended:
+            data['answers'] = [data['answers'][0]]
+
+        return data
+
+class QuizWithCorrectAnswersSerializer(serializers.ModelSerializer):
+    questions = CorrectAnswerSerializer(many=True, allow_null=True)
+
+    class Meta:
+        model = Quiz
+        fields = ['questions']
