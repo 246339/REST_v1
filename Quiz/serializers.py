@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Quiz, Question
 import logging
+import random
 
 logger = logging.getLogger('django')
 
@@ -18,7 +19,6 @@ class QuestionSerializer(serializers.ModelSerializer):
         logger.info(is_open_ended)
 
         answer_count = len(attrs['answers'])
-        logger.info(attrs)
         if answer_count == 0:
             raise serializers.ValidationError("A question must have at least 1 answer if it is open ended or 2 answers if it is closed")
         if answer_count == 1 and not is_open_ended:
@@ -31,8 +31,6 @@ class QuizSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, allow_null=True)
 
     def validate(self, attrs):
-        logger.info(attrs)
-
         if len(attrs['questions']) < 1:
             raise serializers.ValidationError("A quiz must have at least 1 question")
 
@@ -48,3 +46,32 @@ class QuizSerializer(serializers.ModelSerializer):
         for question in questions:
             Question.objects.create(quiz=quiz, **question)
         return quiz
+
+
+class QuizListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quiz
+        fields = ['id', 'name']
+
+
+class QuestionWithRandomizedAnswersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['text', 'is_open_ended', 'answers']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if not data['is_open_ended']:
+            random.shuffle(data['answers'])
+        else :
+            data.pop('answers', None)
+
+        return data
+
+class QuizWithRandomizedAnswersSerializer(serializers.ModelSerializer):
+    questions = QuestionWithRandomizedAnswersSerializer(many=True, allow_null=True)
+
+    class Meta:
+        model = Quiz
+        fields = ['name', 'questions']
+
