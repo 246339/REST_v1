@@ -1,16 +1,15 @@
 from django.http.response import JsonResponse
 from rest_framework import status
 from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from Quiz.serializers import QuizWithCorrectAnswersSerializer
 from Quiz.models import Quiz
 
-import logging
-
 @api_view(['POST'])
-def view_quiz(request, pk):
-    logger = logging.getLogger('django')
+@permission_classes([IsAuthenticated])
+def score_quiz(request, pk):
     try:
         quiz = Quiz.objects.get(id=pk)
     except Quiz.DoesNotExist:
@@ -19,7 +18,6 @@ def view_quiz(request, pk):
     user_answers = QuizWithCorrectAnswersSerializer(data=JSONParser().parse(request))
     if not user_answers.is_valid():
         return JsonResponse(user_answers.errors, status=status.HTTP_400_BAD_REQUEST)
-    logger.info(user_answers.validated_data['questions'])
     correct_answers = QuizWithCorrectAnswersSerializer(quiz).data['questions']
 
     user_answers = user_answers.validated_data['questions']
