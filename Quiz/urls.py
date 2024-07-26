@@ -3,6 +3,7 @@ from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 from .models import Quiz
 from .views import score_quiz
+from rest_framework.authtoken import views
 from django.views.generic import RedirectView
 from django.contrib import admin
 from rest_framework import generics
@@ -18,4 +19,5 @@ urlpatterns =  [
     path('api/quizzes/manage/new/', generics.CreateAPIView.as_view(serializer_class=QuizSerializer, permission_classes=[permissions.IsAdminUser])),
     path('api/quizzes/manage/<int:pk>', generics.RetrieveDestroyAPIView.as_view(queryset=Quiz.objects.all(), serializer_class=QuizSerializer, permission_classes=[permissions.IsAdminUser])),
     path('admin/', admin.site.urls),
+    path('api-token-auth/', views.obtain_auth_token)
 ]
